@@ -3,13 +3,14 @@ const url_api = "https://rickandmortyapi.com/api/character";
 
 /**
 requestData
-Send request to Endpoint
-@param {string} url_api**/
-async function requestData(url_api) {
+@param {string} url_api
+@param {number} page  <-- Nuevo parámetro **/
+async function requestData(url_api, page = 1) {
     const response = await axios.get(url_api);
-    let data = response.data; 
+    let data = response.data;
     
-    getElementButton(document, 'set', data.info);
+    // Le pasamos el número de página a la siguiente función
+    getElementButton(document, 'set', data.info, page);
     renderHtml(data);
 }
 
@@ -17,37 +18,45 @@ async function requestData(url_api) {
 loadMore
 @param {string} direction **/
 function loadMore(direction) {
-    getElementButton(document, direction);
+    // Obtenemos el número actual que está escrito en el HTML
+    let pageText = document.getElementById("pageId").innerText;
+    let currentPage = parseInt(pageText.replace("Página: ", ""));
+
+    if (direction === 'next') {
+        getElementButton(document, 'next', null, currentPage + 1);
+    } else {
+        getElementButton(document, 'prev', null, currentPage - 1);
+    }
 }
 
 /**
 getElementButton
 @param {object} elementButton
 @param {string} operation
-@param {object} info**/
-function getElementButton(elementButton, operation = 'next', info = null) {
+@param {object} info
+@param {number} page <-- Recibe el número **/
+function getElementButton(elementButton, operation = 'next', info = null, page = 1) {
     const nextBtn = elementButton.getElementById("loadMore");
-    const prevBtn = elementButton.getElementById("loadLess"); // ID actualizado aquí
+    const prevBtn = elementButton.getElementById("loadLess");
+    const pageIndicator = elementButton.getElementById("pageId");
 
     if (operation == 'set') {
-        // Configuración botón Siguiente
         nextBtn.setAttribute("data-next", (info.next == null) ? '' : info.next);
-        nextBtn.disabled = (info.next == null);
-        
-        // Configuración botón Anterior
         prevBtn.setAttribute("data-prev", (info.prev == null) ? '' : info.prev);
+
+        nextBtn.disabled = (info.next == null);
         prevBtn.disabled = (info.prev == null);
+        
+        // Escribimos el número de página actual en el SPAN
+        pageIndicator.innerText = `Página: ${page}`;
 
     } else if (operation == 'next') {
         const next = nextBtn.getAttribute("data-next");
-        if (next !== "") {
-            requestData(next);
-        }
+        if (next !== "") requestData(next, page);
+
     } else if (operation == 'prev') {
         const prev = prevBtn.getAttribute("data-prev");
-        if (prev !== "") {
-            requestData(prev);
-        }
+        if (prev !== "") requestData(prev, page);
     }
 }
 
@@ -56,17 +65,18 @@ renderHtml
 @param {object} data**/
 function renderHtml(data) {
     let element = document.getElementById("character");
-    element.innerHTML = ""; // Limpiamos para la nueva página
+    let htmlContent = ""; 
     
-    let resultCount = data.results.length;
-    for (let index = 0; index < resultCount; index++) {
+    for (let index = 0; index < data.results.length; index++) {
         let character = data.results[index];
-        element.innerHTML += `<li>
+        htmlContent += `<li>
             <img src="${character.image}" alt="${character.name}">
             <h2>${character.name}</h2>
             <span>${character.gender}</span>
             </li>`;
     }
+    element.innerHTML = htmlContent;
 }
 
-requestData(url_api);
+// Empezamos en la página 1
+requestData(url_api, 1);

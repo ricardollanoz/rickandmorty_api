@@ -9,12 +9,14 @@
 <body>
     <main>
     <ul id="character"></ul>
-        <div class="pagination">
-            
-            <button id="loadLess" data-next="" data-prev="" onclick="loadMore('prev')">Anterior</button>
-            
-            <button id="loadMore" data-next="" data-prev="" onclick="loadMore('next')">Siguiente</button>
-        </div>
+    <div class="pagination">
+        <button id="loadLess" data-prev="" onclick="loadMore('prev')">Anterior</button>
+        
+        <!-- Aquí ponemos el número -->
+        <span id="pageId">Página: 1</span>
+        
+        <button id="loadMore" data-next="" onclick="loadMore('next')">Siguiente</button>
+    </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.16.0/dist/axios.min.js"></script>
     <script src="api.js"></script>

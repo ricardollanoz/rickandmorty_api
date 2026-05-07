@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+    <ul id="character"></ul>
+        <div class="pagination">
+            
+            <button id="loadLess" data-next="" data-prev="" onclick="loadMore('prev')">Anterior</button>
+            
+            <button id="loadMore" data-next="" data-prev="" onclick="loadMore('next')">Siguiente</button>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.16.0/dist/axios.min.js"></script>
+    <script src="api.js"></script>
+</body>
+</html>

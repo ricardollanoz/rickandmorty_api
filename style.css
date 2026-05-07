@@ -19,11 +19,25 @@ main {
     gap: 30px;
 }
 
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: transparent; 
+}
+
+header img {
+    height: 20vh; /* Ajusta el tamaño */
+    width: auto;
+    /* ESTA ES LA MAGIA: elimina el fondo claro y deja las letras */
+    mix-blend-mode: multiply; 
+    filter: contrast(1.2); /* Hace que las letras resalten más */
+}
 
 #character {
     display: grid;
     
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(5, 1fr); 
     gap: 10px; 
     width: 100%;
     list-style: none;
@@ -58,14 +72,40 @@ main {
 #loadMore, #loadLess {
     padding: 10px 25px;
     cursor: pointer;
-    background-color: #0dff9a;
+    background-color: #00ff62;
     color: white;
     border: none;
     border-radius: 4px;
+    font-size: 25px;
 }
 
 #loadMore:disabled, #loadLess:disabled {
     background-color: #ccc;
     cursor: not-allowed;
     opacity: 0.7;
+}
+
+/* Contenedor del filtro */
+#filters {
+    width: 100%; /* Ocupa todo el ancho para poder alinear a la izquierda */
+    display: flex;
+    justify-content: flex-start; /* Lo manda a la izquierda */
+    margin-bottom: -10px; /* Ajusta el espacio con la lista */
+}
+
+/* Estilo del SELECT (el desplegable) */
+#gender-filter {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid #0dff9a;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+    color: #333;
+}
+
+/* Efecto al pasar el mouse por el filtro */
+#gender-filter:hover {
+    border-color: #0bbd72;
 }

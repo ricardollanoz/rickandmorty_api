@@ -27,11 +27,11 @@ header {
 }
 
 header img {
-    height: 150px; /* Ajusta el tamaño */
+    height: 150px; 
     width: auto;
-    /* ESTA ES LA MAGIA: elimina el fondo claro y deja las letras */
+    
     mix-blend-mode: multiply; 
-    filter: contrast(1.2); /* Hace que las letras resalten más */
+    filter: contrast(2); /* Hace que las letras resalten más */
 }
 
 #character {
@@ -41,7 +41,6 @@ header img {
     gap: 10px; 
     width: 100%;
     list-style: none;
-    transition: opacity 0.3s ease; /* Hace que el cambio de transparencia sea suave */
 }
 
 
@@ -49,7 +48,6 @@ header img {
     background: #00ff95;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -88,10 +86,10 @@ header img {
 
 /* Contenedor del filtro */
 #filters {
-    width: 100%; /* Ocupa todo el ancho para poder alinear a la izquierda */
+    width: 100%; 
     display: flex;
-    justify-content: flex-start; /* Lo manda a la izquierda */
-    margin-bottom: -10px; /* Ajusta el espacio con la lista */
+    justify-content: flex-start; 
+   
 }
 
 /* Estilo del SELECT (el desplegable) */
@@ -124,14 +122,14 @@ header img {
     /* El transform asegura que el centro del div coincida con el centro de la pantalla */
     transform: translate(-50%, -50%);
     
-    /* Estilos visuales */
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    
+    background-color: rgba(255, 255, 255, 0.9); 
     padding: 20px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     z-index: 9999; /* Asegura que esté por encima de todo */
     
-    color: #007bff;
+    color: #4e4e4e;
     font-weight: bold;
     font-family: sans-serif;
     font-size: 1.5rem;

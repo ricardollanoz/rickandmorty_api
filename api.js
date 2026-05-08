@@ -5,25 +5,41 @@ let datosEnMemoria = [];
 let cargando = false; 
 
 async function requestData(url_api, page = 1) {
-    if (cargando) return; // Bloquea si ya se está cargando una página
+    if (cargando) return;
     cargando = true;
+
+    // 1. Prendemos el Loading
+    const loadingElement = document.getElementById("loading");
+    loadingElement.style.display = "block";
+    document.getElementById("character").style.opacity = "0.5";
 
     try {
         const response = await axios.get(url_api);
         let data = response.data;
-        
-        // Guardamos los personajes en memoria
-        datosEnMemoria = data.results;
 
-        // Limpiamos el selector de filtro al cambiar de página
-        document.getElementById("gender-filter").value = "";
+        // 2. Usamos el temporizador sencillo
+        setTimeout(function() {
+            // Todo lo que pongas aquí adentro pasará después de 1 segundo
+            datosEnMemoria = data.results;
+            document.getElementById("gender-filter").value = "";
 
-        getElementButton(document, 'set', data.info, page, data.info.pages);
-        renderHtml(datosEnMemoria); 
+            getElementButton(document, 'set', data.info, page, data.info.pages);
+            renderHtml(datosEnMemoria);
 
-    } finally {
-        cargando = false; // Liberamos el bloqueo
+            // 3. Apagamos el Loading y regresamos la opacidad
+            loadingElement.style.display = "none";
+            document.getElementById("character").style.opacity = "1";
+            cargando = false; 
+
+        }, 1000); // 1000 milisegundos = 1 segundo
+
+    } catch (error) {
+        console.error("Error:", error);
+        loadingElement.style.display = "none";
+        cargando = false;
     }
+    // Nota: Quitamos el 'finally' para que el 'cargando = false' ocurra 
+    // solo cuando pase el segundo del temporizador.
 }
 
 // 2. FILTRO: Usando función tradicional
@@ -46,6 +62,7 @@ function loadMore(direction) {
     let partes = pageText.split(" "); 
     let currentPage = parseInt(partes[1]); 
 
+    // Aquí llamamos a getElementButton pasándole el nuevo número de página
     if (direction === 'next') {
         getElementButton(document, 'next', null, currentPage + 1);
     } else {
@@ -66,12 +83,14 @@ function getElementButton(elementButton, operation = 'next', info = null, page =
         pageIndicator.innerText = `Página ${page} de ${totalPages}`;
 
     } else if (operation == 'next') {
-        const next = nextBtn.getAttribute("data-next");
-        if (next !== "") requestData(next, page);
+        const nextUrl = nextBtn.getAttribute("data-next");
+        // IMPORTANTE: Aquí llamamos a requestData, que es quien activa el Loading
+        if (nextUrl !== "") requestData(nextUrl, page);
 
     } else if (operation == 'prev') {
-        const prev = prevBtn.getAttribute("data-prev");
-        if (prev !== "") requestData(prev, page);
+        const prevUrl = prevBtn.getAttribute("data-prev");
+        // IMPORTANTE: Aquí llamamos a requestData, que es quien activa el Loading
+        if (prevUrl !== "") requestData(prevUrl, page);
     }
 }
 

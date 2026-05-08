@@ -27,7 +27,7 @@ header {
 }
 
 header img {
-    height: 20vh; /* Ajusta el tamaño */
+    height: 150px; /* Ajusta el tamaño */
     width: auto;
     /* ESTA ES LA MAGIA: elimina el fondo claro y deja las letras */
     mix-blend-mode: multiply; 
@@ -41,6 +41,7 @@ header img {
     gap: 10px; 
     width: 100%;
     list-style: none;
+    transition: opacity 0.3s ease; /* Hace que el cambio de transparencia sea suave */
 }
 
 
@@ -108,4 +109,30 @@ header img {
 /* Efecto al pasar el mouse por el filtro */
 #gender-filter:hover {
     border-color: #0bbd72;
+}
+
+/* Estilo para el contenedor del Loading */
+#loading {
+    /* Por defecto oculto */
+    display: none; 
+
+    /* Posicionamiento fijo en toda la pantalla */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    
+    /* El transform asegura que el centro del div coincida con el centro de la pantalla */
+    transform: translate(-50%, -50%);
+    
+    /* Estilos visuales */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 9999; /* Asegura que esté por encima de todo */
+    
+    color: #007bff;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 1.5rem;
 }
